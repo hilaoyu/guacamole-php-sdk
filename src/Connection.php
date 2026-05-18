@@ -131,16 +131,16 @@ class Connection
         ]);
     }
 
-    public function createSsh(string $name, string $hostname, string $username, string $password, int $port = 22, array $attributes = [])
+    public function createSsh(string $name, string $hostname, string $username, string $password, int $port = 22, array $attributes = [], array $parameters = [])
     {
         $endpoint = '/session/data/' . $this->dataSource . '/connections';
 
-        $params = [
+        $params = array_merge($parameters,[
             'hostname' => $hostname,
             'username' => $username,
             'port' => $port,
             'password' => $password,
-        ];
+        ]);
 
         return $this->operation->request('POST', $endpoint, [
             'json' => [
