@@ -112,6 +112,21 @@ class Connection
         return $res === '' ? [] : $res;
     }
 
+    public function getSharingKey(string $connectionIdentifier, string $sharing_tunnel,string $token)
+    {
+        $endpoint = '/session/tunnels/' . $connectionIdentifier . '/activeConnection/sharingCredentials/' . $sharing_tunnel . '?token=' . $token;
+        $params=[
+
+        ];
+        $re =  $this->operation->request('GET', $endpoint, [
+        ],false);
+
+        if(!isset($re["values"]["key"])){
+            return "";
+        }
+        return $re["values"]["key"];
+    }
+
     public function createVnc(string $name, string $password, int $port = 5901, array $parameters = [], array $attributes = [])
     {
         $endpoint = '/session/data/' . $this->dataSource . '/connections';
